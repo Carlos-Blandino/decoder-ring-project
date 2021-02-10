@@ -15,12 +15,6 @@ describe("Substitution", () => {
         expect(actual).to.equal(expected);
     })
 
-    // it("should return false if the substitution alphabet does not contain unique characters", () => {
-    //     const actual = substitution("dog", "plmoknijbuhvygctfxrdzeswaq");
-    //     const expected = false;
-    //     expect(actual).to.equal(expected);
-    // })
-
     it("should encode a message by using the given substitution alphabet", () => {
         const actual = substitution("thinkful", "plmoknijbuhvygctfxrdze$waq");
         const expected = "djbghnzv";

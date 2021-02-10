@@ -5,7 +5,6 @@
 
 const polybiusModule = (function () {
 
-
   function polybius(message, encode = true) {
 
     let result = "";
@@ -65,7 +64,6 @@ const polybiusModule = (function () {
       45: "y",
       55: "z"
     }
-
     const messageArray = message.split("")
 
     if (encode) {
@@ -78,24 +76,26 @@ const polybiusModule = (function () {
         result += lookUpTable[lowerCaseMessage[i]]
       }
       return result;
+      //decode start here
     } else {
       //check for the accumulation of number of pairs , needs to be even
       // check passed so continue with program
       let key = "";
       const newMessage = message
 
-      // 
       for (let i = 0; i < newMessage.length; i++) {
         //when iterating look for matching letter, letter is a sequence of every 2 numbers
         key += newMessage[i]
+
         //first look each individual character and check if its a number
+        //if you find any character that is not a number add it to the collection
         if (key.length === 1 && (!parseInt(key))) {
           result += key
           key = ""
           continue;
         }
 
-        //when you get 2 , check the lookup table 
+        //when you get 2 , check the lookup table and add matching letter to a the collection
         if (key.length === 2) {
           result += invertedTable[key]
           key = ""
@@ -104,11 +104,6 @@ const polybiusModule = (function () {
         if (key.length === 1 && (parseInt(key) && i === newMessage.length - 1)) {
           return false;
         }
-
-        //if you find any character that is not a number add it to the collection
-
-        //add matching letter to a the collection
-
       }
       return result;
     }

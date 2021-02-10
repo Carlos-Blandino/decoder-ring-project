@@ -10,7 +10,6 @@ const caesarModule = (function () {
   const LOWERCASE_A = 97;
   const LOWERCASE_Z = 122;
 
-
   function caesar(input, shift, encode = true) {
     // check if shift is proper value
     if (!shift || shift === 0 || shift > 25 || shift < -25) {
