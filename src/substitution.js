@@ -18,8 +18,8 @@ const substitutionModule = (function () {
       acc[currentElement] = (acc[currentElement] || 0) + 1;
       return acc;
     }, {})
-    //use reference table to compare and return false if duplicates are found
-    //check against the scramble table
+    //do a check duplicates check before going foward
+    //iterate and check against the scramble table for duplicates
     for (letter in scrambleTable) {
       if (scrambleTable[letter] < 2) {
         continue;
@@ -32,15 +32,15 @@ const substitutionModule = (function () {
       // translating message: iterate message and maintaining spaces
       for (let i = 0; i < toLowerMessage.length; i++) {
         //check for anything that is not an alphabet letter and add it to the encoded message
-        //duplicate all other characters into the number sequence
+        //copy all other characters into the number sequence
         const letter = toLowerMessage[i];
         if (actualAlphabetArray.includes(letter)) {
+          // grab index of the letters actual index and swap for the scambled array's index value
           const actualIndexInAlphabet = actualAlphabetArray.indexOf(letter);
           result += scrambledAlphabetArray[actualIndexInAlphabet];
         } else {
           result += toLowerMessage[i];
         }
-        // grab index of the letters actual index and swap for the scambled array's index value
       }
       return result;
       //decoding starts here

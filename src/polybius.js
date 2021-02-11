@@ -6,7 +6,8 @@
 const polybiusModule = (function () {
 
   function polybius(message, encode = true) {
-
+    //created dictionaries that I ended up calling look up tables
+    //one for letter to number and the other for number to letter
     let result = "";
     if (message.length === 0) return false;
     const lookUpTable = {
@@ -64,7 +65,6 @@ const polybiusModule = (function () {
       45: "y",
       55: "z"
     }
-    const messageArray = message.split("")
 
     if (encode) {
       const lowerCaseMessage = message.toLowerCase();
@@ -76,8 +76,8 @@ const polybiusModule = (function () {
         result += lookUpTable[lowerCaseMessage[i]]
       }
       return result;
-      //decode start here
     } else {
+      //start decoding here
       //check for the accumulation of number of pairs , needs to be even
       // check passed so continue with program
       let key = "";
