@@ -3,19 +3,19 @@ const expect = require("chai").expect;
 const substitution = require("../src/substitution");
 
 describe("Substitution", () => {
-    it("should return false if the substitution alphabet is missing", () => {
+    it("expected false when alphabet is missing", () => {
         const actual = substitution("dog");
         const expected = false;
-        expect(actual).to.equal(expected);
+        expect(actual).to.be.false;
     })
 
-    it("should return false if the substitution alphabet is not exactly 26 characters", () => {
+    it("expected false when alphabet is not 26 characters", () => {
         const actual = substitution("dog", "lmoknijbuhvygctfxrdzeswaq");
         const expected = false;
-        expect(actual).to.equal(expected);
+        expect(actual).to.be.false;
     })
 
-    it("should encode a message by using the given substitution alphabet", () => {
+    it("should encode a message by using the given alphabet", () => {
         const actual = substitution("thinkful", "plmoknijbuhvygctfxrdze$waq");
         const expected = "djbghnzv";
         expect(actual).to.equal(expected);
@@ -27,7 +27,6 @@ describe("Substitution", () => {
         expect(actual).to.equal(expected);
     })
 
-    //what is going on with this one
     it("should preserve spaces when encoding", () => {
         const actual = substitution("You are an excellent spy", "xoyqmcgruk$waflnthdjpzibev");
         const expected = 'elp xhm xf mbymwwmfj dne';
@@ -55,6 +54,6 @@ describe("Substitution", () => {
     it("alphabet should not contain duplicates", () => {
         const actual = substitution("thinkful", "plmoknljbuhvygctfxrdze$waq");
         const expected = false;
-        expect(actual).to.equal(expected);
+        expect(actual).to.be.false;
     })
 })
