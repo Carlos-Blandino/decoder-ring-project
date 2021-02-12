@@ -6,10 +6,25 @@
 const polybiusModule = (function () {
 
   function polybius(message, encode = true) {
+    //guard clauses: one for length , one for total count of numbers 
+    if (message.length === 0) return false;
+
+    if (encode === false) {
+      let totalOfNumbers = 0;
+      for (element of message) {
+        if (parseInt(element)) {
+          totalOfNumbers += 1;
+        }
+
+      }
+      if (totalOfNumbers % 2 === 1) return false;
+    }
+    //end of guard clauses
+
+    //setup accumulator variable
+    let result = "";
     //created dictionaries that I ended up calling look up tables
     //one for letter to number and the other for number to letter
-    let result = "";
-    if (message.length === 0) return false;
     const lookUpTable = {
       a: 11,
       b: 21,
@@ -65,9 +80,10 @@ const polybiusModule = (function () {
       45: "y",
       55: "z"
     }
+    const lowerCaseMessage = message.toLowerCase();
 
     if (encode) {
-      const lowerCaseMessage = message.toLowerCase();
+
       for (let i = 0; i < lowerCaseMessage.length; i++) {
         if (!(lowerCaseMessage[i] in lookUpTable)) {
           result += lowerCaseMessage[i];
@@ -81,11 +97,10 @@ const polybiusModule = (function () {
       //check for the accumulation of number of pairs , needs to be even
       // check passed so continue with program
       let key = "";
-      const newMessage = message
 
-      for (let i = 0; i < newMessage.length; i++) {
+      for (let i = 0; i < message.length; i++) {
         //when iterating look for matching letter, letter is a sequence of every 2 numbers
-        key += newMessage[i]
+        key += message[i]
 
         //first look each individual character and check if its a number
         //if you find any character that is not a number add it to the collection
@@ -101,9 +116,7 @@ const polybiusModule = (function () {
           key = ""
           continue;
         }
-        if (key.length === 1 && (parseInt(key) && i === newMessage.length - 1)) {
-          return false;
-        }
+
       }
       return result;
     }

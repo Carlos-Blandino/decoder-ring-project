@@ -5,16 +5,16 @@ const expect = require("chai").expect
 
 
 describe("polybius", () => {
-    it("should return false if the length of all numbers is odd", () => {
+    it("expected false if the length of all numbers is odd", () => {
         const actual = polybius('325', false);
         const expected = false;
-        expect(actual).to.equal(expected);
+        expect(actual).to.be.false;
     });
 
-    it("i and j share a value key of 42 and both are shown when decoding", () => {
+    it("'(i/j)' expected for 42 when decoding", () => {
         const actual = polybius('4432423352125413', false);
-        const expected = 'th(i/j)nkful';
-        expect(actual).to.equal(expected);
+        const expected = '(i/j)';
+        expect(actual).to.include(expected);
     });
 
     it("should maintain spacing when decoding", () => {
