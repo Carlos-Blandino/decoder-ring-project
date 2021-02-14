@@ -10,15 +10,15 @@ const caesarModule = (function () {
     //return false for if shift value is 0 < -25 or > 25
     if (!shiftValue || shiftValue === 0 || shiftValue < -25 || shiftValue > 25) return false;
     //create an array of the alphabet letters
-    const lookUpTable = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z".split(",");
+    const alphabetReferenceArray = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z".split(",");
     //copy  the lookup table in preparation for sort mutation, 
-    const reverseLookUpTable = lookUpTable.slice();
-    reverseLookUpTable.sort((a, b) => a < b ? 1 : -1);
+    const reverseAlphabetArray = alphabetReferenceArray.slice();
+    reverseAlphabetArray.sort((a, b) => a < b ? 1 : -1);
     //ignore capital letters when encoding
     const lowerCaseMessage = message.toLowerCase()
 
     let encodedMessage = ""
-    //if the key is positive or negative
+
 
     //change shift value based on encode true or false 
     if (encode === false) {
@@ -28,54 +28,55 @@ const caesarModule = (function () {
         shiftValue = Math.abs(shiftValue)
       }
     }
-    //start decoding or encoding
+    //start decoding or encoding: starting on positive shift values
     if (shiftValue > 0) {
       //work on positive shift values
-      //iterate message for encoding or decoding using the look up table
+      //iterate message for encoding or decoding using the alphabet reference array
       for (let i = 0; i < lowerCaseMessage.length; i++) {
+
         //check for anything that is not an alphabet letter and add it to the encoded message
-        //duplicate all other characters into the number sequence
-        if (!lookUpTable.includes(lowerCaseMessage[i])) {
+        if (!alphabetReferenceArray.includes(lowerCaseMessage[i])) {
           encodedMessage += lowerCaseMessage[i];
           continue;
         }
-        //shift the number when encoding
-        const shiftedIndex = lookUpTable.indexOf(lowerCaseMessage[i]) + shiftValue + 1;
-        //get the index of the letter and add the shift 
-        if (shiftedIndex < lookUpTable.length + 1) {
-          encodedMessage += lookUpTable[shiftedIndex - 1];
+        //apply the shift value and get the adjusted index
+        const shiftedIndex = alphabetReferenceArray.indexOf(lowerCaseMessage[i]) + shiftValue + 1;
+        //the adjusted index can not be greater than the arrays length 
+        //if its not greater , apply then shifted index to the array
+        if (shiftedIndex < alphabetReferenceArray.length + 1) {
+          encodedMessage += alphabetReferenceArray[shiftedIndex - 1];
           continue;
         }
-        //const adjustedIndex = shiftedIndex - lookUpTable.length - 1;
-        if (shiftedIndex > lookUpTable.length) {
-          const adjustedIndex = shiftedIndex - lookUpTable.length - 1;
-          encodedMessage += lookUpTable[adjustedIndex]
+        //anything greater than the arrays length needs to start at the beginning of the array
+        if (shiftedIndex > alphabetReferenceArray.length) {
+          const adjustedIndex = shiftedIndex - alphabetReferenceArray.length - 1;
+          encodedMessage += alphabetReferenceArray[adjustedIndex]
         }
-        //create the resulting number sequence from the letters
+
       }
       return encodedMessage;
     } else {
-
-      //work on negative shift values and using reverse look up table 
+      //work on negative shift values and using reverse alphabet array
       //iterate message for encoding or decoding
       const newShiftValue = Math.abs(shiftValue);
       for (let i = 0; i < lowerCaseMessage.length; i++) {
+
         //check for anything that is not an alphabet letter and add it to the encoded message
-        //duplicate all other characters into the number sequence
-        if (!reverseLookUpTable.includes(lowerCaseMessage[i])) {
+        if (!reverseAlphabetArray.includes(lowerCaseMessage[i])) {
           encodedMessage += lowerCaseMessage[i];
           continue;
         }
         //shift the number when encoding or decoding
-        const shiftedIndex = reverseLookUpTable.indexOf(lowerCaseMessage[i]) + newShiftValue + 1;
-        //get the index of the letter and add the shift
-        if (shiftedIndex < reverseLookUpTable.length + 1) {
-          encodedMessage += reverseLookUpTable[shiftedIndex - 1];
+        const shiftedIndex = reverseAlphabetArray.indexOf(lowerCaseMessage[i]) + newShiftValue + 1;
+        //check the index is less than the arrays length
+        if (shiftedIndex < reverseAlphabetArray.length + 1) {
+          encodedMessage += reverseAlphabetArray[shiftedIndex - 1];
           continue;
         }
-        if (shiftedIndex > reverseLookUpTable.length) {
-          const adjustedIndex = shiftedIndex - reverseLookUpTable.length - 1;
-          encodedMessage += reverseLookUpTable[adjustedIndex]
+        //anything greater than the arrays length needs to start at the beginning of the array 
+        if (shiftedIndex > reverseAlphabetArray.length) {
+          const adjustedIndex = shiftedIndex - reverseAlphabetArray.length - 1;
+          encodedMessage += reverseAlphabetArray[adjustedIndex]
         }
       }
       return encodedMessage;
